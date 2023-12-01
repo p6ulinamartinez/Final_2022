@@ -181,13 +181,25 @@ barchartGC(~infected + treatment,data=drugUser, type="percent")
 
 This is a barchart that compares the graphical results of drug users only from the data. It is comparing rates of getting Covid 19 as compared by vaccination status. The left shows individuals who got Covid 19 and the right shows individuals who did not get covid.We can see that more vaccinated individuals got covid while people who did not get covid are very close. 
 
-### Graphical results
+### Numerical Results
 
 ```{r}
-barchartGC(~infected + treatment,data=drugUser)
-barchartGC(~infected + treatment,data=drugUser, type="percent")
+tableDrug <- xtabs(~infected + treatment, data=drugUser)
+rowPerc(tableDrug)
+colPerc(tableDrug)
 ```
 
-This is a barchart that compares the graphical results of drug users only from the data. It is comparing rates of getting Covid 19 as compared by vaccination status. The left shows individuals who got Covid 19 and the right shows individuals who did not get covid.We can see that more vaccinated individuals got covid while people who did not get covid are very close. 
+The numerical results is telling us that the placebo group who got Covid are about 10% of the time where the vaccinated group got Covid 90% of the time. We can see that the vaccine is not effective in this scenario. We can also say that this group is at a higher risks of getting covid even more than the LGBTQ group.
+
+### Inferential Results
+
+```{r}
+chisq.test(tableDrug)
+chisqtestGC(tableDrug)
+drugFisher <- fisher.test(tableDrug)
+drugFisher
+```
+
+The Chi Squared test shows that the P-value for the tested data is  0.0000000002.32 which smaller than 0.05. This number indicates that there is a difference in the data. The Chi-Squared statistic is 35.2889 which is way larger than our degrees of freedom of 1 in this data.  
 
 # Overall Results and Conclusions
